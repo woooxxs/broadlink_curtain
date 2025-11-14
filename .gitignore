@@ -161,3 +161,4 @@ build/
 dist/
 *.egg-info/
 
+docker/
