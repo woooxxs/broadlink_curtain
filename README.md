@@ -105,34 +105,50 @@ lovelace:
 
 ### 3. 添加自定义卡片
 
-#### 在仪表板中添加
+> ⚠️ **重要**: 卡片配置是在 **Home Assistant 网页界面** 中操作，不是在文件中配置！
 
-1. 打开Home Assistant仪表板
+#### 在仪表板中添加（网页界面操作）
+
+1. 浏览器打开 Home Assistant（例如 http://localhost:8123）
 2. 点击右上角 **⋮** (三个点) → **编辑仪表板**
 3. 点击 **+ 添加卡片**
 4. 向下滚动到底部，点击 **手动** 或 **按代码配置**
-5. 输入以下配置：
+5. 在代码编辑框中输入：
    ```yaml
    type: custom:broadlink-curtain-card
-   entity: cover.你的窗帘名称
+   entity: cover.test
    ```
-6. 点击 **保存** → **完成**
+6. 点击 **保存** → 点击右上角 **完成**
 
 #### 卡片类型对比
+
+| 配置 | 效果 | 说明 |
+|------|------|------|
+| `type: custom:broadlink-curtain-card` | ✅ 水平滑块 + 快捷按钮 | **推荐使用** |
+| `type: cover` | ❌ 垂直滑块，无快捷按钮 | 默认卡片 |
+| `type: entities` | ❌ 只有简单按钮 | 实体列表卡片 |
 
 ```yaml
 # ✅ 正确 - 自定义卡片（水平滑块 + 快捷按钮）
 type: custom:broadlink-curtain-card
-entity: cover.你的窗帘名称
+entity: cover.test
 
-# ❌ 默认卡片 - 只有垂直滑块，没有快捷按钮
+# ❌ 错误 - 默认窗帘卡片（垂直滑块）
 type: cover
-entity: cover.你的窗帘名称
+entity: cover.test
+
+# ❌ 错误 - 实体卡片（只有简单按钮）
+type: entities
+entities:
+  - cover.test
+title: 窗帘
 ```
 
-**注意**: 必须使用 `type: custom:broadlink-curtain-card` 才能看到水平滑块和快捷按钮！
+**⚠️ 重要**: 必须使用 `type: custom:broadlink-curtain-card` 才能看到水平滑块和快捷按钮！
 
 #### 更多配置示例
+
+> 💡 **提示**: 下面的示例文件只是参考，需要复制到 Home Assistant 网页界面中使用！
 
 查看 [examples/lovelace-card-config.yaml](examples/lovelace-card-config.yaml) 了解：
 - 单个窗帘卡片
@@ -140,6 +156,8 @@ entity: cover.你的窗帘名称
 - 网格布局
 - 条件显示
 - 更多高级配置
+
+**详细配置教程**: 查看 [如何配置卡片.md](如何配置卡片.md) 了解完整的图文教程
 
 ## 🎮 使用说明
 
