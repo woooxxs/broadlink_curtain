@@ -1,0 +1,81 @@
+# 博联窗帘自定义卡片配置示例
+
+# ============================================
+# 方式1: 单个窗帘卡片（推荐）
+# ============================================
+type: custom:broadlink-curtain-card
+entity: cover.客厅窗帘
+
+# ============================================
+# 方式2: 多个窗帘 - 垂直堆叠
+# ============================================
+type: vertical-stack
+cards:
+  - type: custom:broadlink-curtain-card
+    entity: cover.客厅窗帘
+  - type: custom:broadlink-curtain-card
+    entity: cover.卧室窗帘
+  - type: custom:broadlink-curtain-card
+    entity: cover.书房窗帘
+
+# ============================================
+# 方式3: 多个窗帘 - 网格布局
+# ============================================
+type: grid
+columns: 2
+square: false
+cards:
+  - type: custom:broadlink-curtain-card
+    entity: cover.客厅窗帘
+  - type: custom:broadlink-curtain-card
+    entity: cover.卧室窗帘
+  - type: custom:broadlink-curtain-card
+    entity: cover.书房窗帘
+  - type: custom:broadlink-curtain-card
+    entity: cover.阳台窗帘
+
+# ============================================
+# 方式4: 带标题的卡片组
+# ============================================
+type: vertical-stack
+cards:
+  - type: markdown
+    content: |
+      ## 🏠 家庭窗帘控制
+  - type: custom:broadlink-curtain-card
+    entity: cover.客厅窗帘
+  - type: custom:broadlink-curtain-card
+    entity: cover.卧室窗帘
+
+# ============================================
+# 方式5: 条件卡片（根据时间显示）
+# ============================================
+type: conditional
+conditions:
+  - condition: state
+    entity: sun.sun
+    state: above_horizon
+card:
+  type: custom:broadlink-curtain-card
+  entity: cover.客厅窗帘
+
+# ============================================
+# ❌ 错误示例 - 这是默认卡片
+# ============================================
+# 这个配置只会显示垂直滑块，没有快捷按钮
+type: cover
+entity: cover.客厅窗帘
+
+# ============================================
+# 📝 使用说明
+# ============================================
+# 1. 复制上面任意一种配置
+# 2. 在Home Assistant中：
+#    - 点击右上角 ⋮ → 编辑仪表板
+#    - 点击 + 添加卡片
+#    - 向下滚动，点击"手动"或"按代码配置"
+#    - 粘贴配置
+#    - 修改 entity 为你的实际窗帘实体ID
+#    - 点击保存
+# 3. 完成！
+

@@ -105,14 +105,41 @@ lovelace:
 
 ### 3. 添加自定义卡片
 
-1. 编辑仪表板
-2. 添加卡片 → 手动配置
-3. 输入：
+#### 在仪表板中添加
+
+1. 打开Home Assistant仪表板
+2. 点击右上角 **⋮** (三个点) → **编辑仪表板**
+3. 点击 **+ 添加卡片**
+4. 向下滚动到底部，点击 **手动** 或 **按代码配置**
+5. 输入以下配置：
    ```yaml
    type: custom:broadlink-curtain-card
    entity: cover.你的窗帘名称
    ```
-4. 保存
+6. 点击 **保存** → **完成**
+
+#### 卡片类型对比
+
+```yaml
+# ✅ 正确 - 自定义卡片（水平滑块 + 快捷按钮）
+type: custom:broadlink-curtain-card
+entity: cover.你的窗帘名称
+
+# ❌ 默认卡片 - 只有垂直滑块，没有快捷按钮
+type: cover
+entity: cover.你的窗帘名称
+```
+
+**注意**: 必须使用 `type: custom:broadlink-curtain-card` 才能看到水平滑块和快捷按钮！
+
+#### 更多配置示例
+
+查看 [examples/lovelace-card-config.yaml](examples/lovelace-card-config.yaml) 了解：
+- 单个窗帘卡片
+- 多个窗帘垂直堆叠
+- 网格布局
+- 条件显示
+- 更多高级配置
 
 ## 🎮 使用说明
 
@@ -138,6 +165,10 @@ automation:
       data:
         position: 80
 ```
+
+更多配置示例请查看：
+- [Lovelace卡片配置示例](examples/lovelace-card-config.yaml) - 各种卡片布局
+- [完整配置示例](examples/configuration.yaml) - 自动化、脚本、场景等
 
 ## 🧪 Docker测试环境
 

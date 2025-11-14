@@ -1,0 +1,204 @@
+# 博联窗帘 Home Assistant 配置示例
+
+# ============================================
+# 1. 前端资源配置（必需）
+# ============================================
+lovelace:
+  mode: storage
+  resources:
+    - url: /local/broadlink-curtain-card.js
+      type: module
+
+# ============================================
+# 2. 日志配置（可选，用于调试）
+# ============================================
+logger:
+  default: info
+  logs:
+    custom_components.broadlink_curtain: debug
+    broadlink: debug
+
+# ============================================
+# 3. 自动化示例
+# ============================================
+automation:
+  # 早上自动打开窗帘
+  - alias: "早上打开窗帘"
+    trigger:
+      platform: time
+      at: "07:00:00"
+    action:
+      service: cover.set_cover_position
+      target:
+        entity_id: cover.客厅窗帘
+      data:
+        position: 80
+
+  # 晚上自动关闭窗帘
+  - alias: "晚上关闭窗帘"
+    trigger:
+      platform: time
+      at: "18:00:00"
+    action:
+      service: cover.close_cover
+      target:
+        entity_id: cover.客厅窗帘
+
+  # 日落时关闭窗帘
+  - alias: "日落关闭窗帘"
+    trigger:
+      platform: sun
+      event: sunset
+      offset: "-00:30:00"
+    action:
+      service: cover.close_cover
+      target:
+        entity_id: 
+          - cover.客厅窗帘
+          - cover.卧室窗帘
+
+  # 离家时关闭所有窗帘
+  - alias: "离家关闭窗帘"
+    trigger:
+      platform: state
+      entity_id: person.your_name
+      to: "not_home"
+    action:
+      service: cover.close_cover
+      target:
+        entity_id: all
+
+# ============================================
+# 4. 脚本示例
+# ============================================
+script:
+  # 窗帘半开
+  curtain_half_open:
+    alias: "窗帘半开"
+    sequence:
+      - service: cover.set_cover_position
+        target:
+          entity_id: cover.客厅窗帘
+        data:
+          position: 50
+
+  # 窗帘通风模式（开25%）
+  curtain_ventilation:
+    alias: "窗帘通风模式"
+    sequence:
+      - service: cover.set_cover_position
+        target:
+          entity_id: cover.客厅窗帘
+        data:
+          position: 25
+
+  # 所有窗帘同步到指定位置
+  curtain_sync_position:
+    alias: "窗帘同步位置"
+    fields:
+      position:
+        description: "目标位置 (0-100)"
+        example: 50
+    sequence:
+      - service: cover.set_cover_position
+        target:
+          entity_id:
+            - cover.客厅窗帘
+            - cover.卧室窗帘
+            - cover.书房窗帘
+        data:
+          position: "{{ position }}"
+
+# ============================================
+# 5. 场景示例
+# ============================================
+scene:
+  # 早晨场景
+  - name: 早晨模式
+    entities:
+      cover.客厅窗帘:
+        state: open
+        position: 80
+      cover.卧室窗帘:
+        state: open
+        position: 60
+
+  # 观影场景
+  - name: 观影模式
+    entities:
+      cover.客厅窗帘:
+        state: closed
+        position: 0
+
+  # 午休场景
+  - name: 午休模式
+    entities:
+      cover.卧室窗帘:
+        state: open
+        position: 30
+
+# ============================================
+# 6. 输入选择器（用于手动选择预设位置）
+# ============================================
+input_select:
+  curtain_preset:
+    name: 窗帘预设位置
+    options:
+      - "完全打开"
+      - "75%"
+      - "50%"
+      - "25%"
+      - "完全关闭"
+    icon: mdi:curtains
+
+# ============================================
+# 7. 自动化：根据输入选择器控制窗帘
+# ============================================
+automation curtain_preset:
+  - alias: "窗帘预设位置控制"
+    trigger:
+      platform: state
+      entity_id: input_select.curtain_preset
+    action:
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: input_select.curtain_preset
+                state: "完全打开"
+            sequence:
+              - service: cover.set_cover_position
+                data:
+                  position: 100
+          - conditions:
+              - condition: state
+                entity_id: input_select.curtain_preset
+                state: "75%"
+            sequence:
+              - service: cover.set_cover_position
+                data:
+                  position: 75
+          - conditions:
+              - condition: state
+                entity_id: input_select.curtain_preset
+                state: "50%"
+            sequence:
+              - service: cover.set_cover_position
+                data:
+                  position: 50
+          - conditions:
+              - condition: state
+                entity_id: input_select.curtain_preset
+                state: "25%"
+            sequence:
+              - service: cover.set_cover_position
+                data:
+                  position: 25
+          - conditions:
+              - condition: state
+                entity_id: input_select.curtain_preset
+                state: "完全关闭"
+            sequence:
+              - service: cover.close_cover
+        target:
+          entity_id: cover.客厅窗帘
+
