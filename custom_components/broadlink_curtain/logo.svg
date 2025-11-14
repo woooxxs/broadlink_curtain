@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- 背景圆形 -->
+  <circle cx="100" cy="100" r="95" fill="#2196F3" opacity="0.1"/>
+  
+  <!-- 窗帘轨道 -->
+  <rect x="40" y="30" width="120" height="8" rx="4" fill="#424242"/>
+  
+  <!-- 左侧窗帘 -->
+  <g id="left-curtain">
+    <!-- 窗帘褶皱效果 -->
+    <path d="M 45 40 Q 50 60, 45 80 Q 50 100, 45 120 Q 50 140, 45 160 L 45 170 L 55 170 L 55 160 Q 60 140, 55 120 Q 60 100, 55 80 Q 60 60, 55 40 Z" fill="#1976D2"/>
+    <path d="M 55 40 Q 60 60, 55 80 Q 60 100, 55 120 Q 60 140, 55 160 L 55 170 L 65 170 L 65 160 Q 70 140, 65 120 Q 70 100, 65 80 Q 70 60, 65 40 Z" fill="#1E88E5"/>
+    <path d="M 65 40 Q 70 60, 65 80 Q 70 100, 65 120 Q 70 140, 65 160 L 65 170 L 75 170 L 75 160 Q 80 140, 75 120 Q 80 100, 75 80 Q 80 60, 75 40 Z" fill="#2196F3"/>
+  </g>
+  
+  <!-- 右侧窗帘 -->
+  <g id="right-curtain">
+    <!-- 窗帘褶皱效果 -->
+    <path d="M 125 40 Q 130 60, 125 80 Q 130 100, 125 120 Q 130 140, 125 160 L 125 170 L 135 170 L 135 160 Q 140 140, 135 120 Q 140 100, 135 80 Q 140 60, 135 40 Z" fill="#2196F3"/>
+    <path d="M 135 40 Q 140 60, 135 80 Q 140 100, 135 120 Q 140 140, 135 160 L 135 170 L 145 170 L 145 160 Q 150 140, 145 120 Q 150 100, 145 80 Q 150 60, 145 40 Z" fill="#1E88E5"/>
+    <path d="M 145 40 Q 150 60, 145 80 Q 150 100, 145 120 Q 150 140, 145 160 L 145 170 L 155 170 L 155 160 Q 160 140, 155 120 Q 160 100, 155 80 Q 160 60, 155 40 Z" fill="#1976D2"/>
+  </g>
+  
+  <!-- 中间光线效果 -->
+  <rect x="80" y="45" width="40" height="120" fill="#FFC107" opacity="0.3"/>
+  
+  <!-- 窗帘挂钩 -->
+  <circle cx="50" cy="34" r="3" fill="#616161"/>
+  <circle cx="65" cy="34" r="3" fill="#616161"/>
+  <circle cx="80" cy="34" r="3" fill="#616161"/>
+  <circle cx="95" cy="34" r="3" fill="#616161"/>
+  <circle cx="110" cy="34" r="3" fill="#616161"/>
+  <circle cx="125" cy="34" r="3" fill="#616161"/>
+  <circle cx="140" cy="34" r="3" fill="#616161"/>
+  <circle cx="155" cy="34" r="3" fill="#616161"/>
+  
+  <!-- 射频信号图标 -->
+  <g transform="translate(85, 175)">
+    <!-- 设备 -->
+    <rect x="10" y="5" width="10" height="8" rx="2" fill="#424242"/>
+    <!-- 信号波纹 -->
+    <path d="M 15 0 Q 10 5, 15 10" stroke="#FF5722" stroke-width="2" fill="none"/>
+    <path d="M 15 0 Q 5 5, 15 10" stroke="#FF5722" stroke-width="2" fill="none" opacity="0.6"/>
+    <path d="M 15 0 Q 0 5, 15 10" stroke="#FF5722" stroke-width="2" fill="none" opacity="0.3"/>
+  </g>
+  
+  <!-- 文字 -->
+  <text x="100" y="195" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#424242">Broadlink Curtain</text>
+</svg>
+

@@ -1,0 +1,91 @@
+set_curtain_config:
+  name: 设置窗帘配置
+  description: 设置窗帘的开启/关闭时间和射频码
+  target:
+    entity:
+      domain: cover
+      device_class: curtain
+  fields:
+    open_time:
+      name: 开启时间
+      description: 窗帘完全开启所需时间（秒）
+      required: true
+      selector:
+        number:
+          min: 1
+          max: 300
+          unit_of_measurement: s
+    close_time:
+      name: 关闭时间
+      description: 窗帘完全关闭所需时间（秒）
+      required: true
+      selector:
+        number:
+          min: 1
+          max: 300
+          unit_of_measurement: s
+    open_code:
+      name: 开启射频码
+      description: 窗帘开启的射频码（十六进制）
+      required: true
+      selector:
+        text:
+    close_code:
+      name: 关闭射频码
+      description: 窗帘关闭的射频码（十六进制）
+      required: true
+      selector:
+        text:
+    stop_code:
+      name: 停止射频码
+      description: 窗帘停止的射频码（十六进制）
+      required: true
+      selector:
+        text:
+
+test_rf_code:
+  name: 测试射频码
+  description: 测试发送射频码
+  target:
+    entity:
+      domain: cover
+      device_class: curtain
+  fields:
+    code:
+      name: 射频码
+      description: 要测试的射频码（十六进制）
+      required: true
+      selector:
+        text:
+    code_type:
+      name: 射频码类型
+      description: 射频码的类型
+      required: true
+      selector:
+        select:
+          options:
+            - open
+            - close
+            - stop
+
+set_position_manually:
+  name: 手动设置位置
+  description: 手动设置窗帘位置（用于手动操作后同步状态）
+  fields:
+    entity_id:
+      name: 实体ID
+      description: 窗帘实体ID
+      required: true
+      selector:
+        entity:
+          domain: cover
+          device_class: curtain
+    position:
+      name: 位置
+      description: 窗帘位置（0-100）
+      required: true
+      selector:
+        number:
+          min: 0
+          max: 100
+          unit_of_measurement: "%"

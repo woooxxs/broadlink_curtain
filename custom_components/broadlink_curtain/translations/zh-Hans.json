@@ -1,0 +1,45 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "博联窗帘配置",
+        "description": "请填写博联设备和窗帘的配置信息。\n\n**提示：**\n- IP地址格式：192.168.1.100\n- MAC地址格式：aa:bb:cc:dd:ee:ff\n- 射频码需要从博联智能App中学习获取",
+        "data": {
+          "host": "设备IP地址",
+          "mac": "MAC地址",
+          "timeout": "超时时间（秒）",
+          "name": "窗帘名称",
+          "open_code": "开启射频码",
+          "close_code": "关闭射频码",
+          "stop_code": "停止射频码",
+          "open_time": "开启时间（秒）",
+          "close_time": "关闭时间（秒）"
+        },
+        "data_description": {
+          "host": "博联设备的局域网IP地址，例如：192.168.1.100",
+          "mac": "博联设备的MAC地址，例如：e8:70:72:9e:a2:35",
+          "timeout": "设备连接超时时间，默认5秒",
+          "name": "窗帘的显示名称，例如：客厅窗帘",
+          "open_code": "使用博联App学习的开启射频码（十六进制）",
+          "close_code": "使用博联App学习的关闭射频码（十六进制）",
+          "stop_code": "使用博联App学习的停止射频码（十六进制）",
+          "open_time": "窗帘完全打开所需的时间（秒），需要实际测量",
+          "close_time": "窗帘完全关闭所需的时间（秒），需要实际测量"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "无法连接到博联设备，请检查IP地址和网络连接",
+      "unknown": "配置过程中发生未知错误",
+      "invalid_host": "IP地址格式不正确，请使用IPv4格式，如：192.168.1.100",
+      "invalid_mac": "MAC地址格式不正确，请使用格式如：aa:bb:cc:dd:ee:ff",
+      "invalid_code": "射频码格式不正确，请使用十六进制格式",
+      "invalid_time": "时间值必须在1-300秒之间"
+    },
+    "abort": {
+      "already_configured": "此设备已配置",
+      "already_in_progress": "配置流程正在进行中"
+    }
+  }
+}
+

@@ -1,0 +1,45 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Broadlink Curtain Configuration",
+        "description": "Please fill in the Broadlink device and curtain configuration.\n\n**Tips:**\n- IP address format: 192.168.1.100\n- MAC address format: aa:bb:cc:dd:ee:ff\n- RF codes need to be learned from Broadlink app",
+        "data": {
+          "host": "Device IP Address",
+          "mac": "MAC Address",
+          "timeout": "Timeout (seconds)",
+          "name": "Curtain Name",
+          "open_code": "Open RF Code",
+          "close_code": "Close RF Code",
+          "stop_code": "Stop RF Code",
+          "open_time": "Open Time (seconds)",
+          "close_time": "Close Time (seconds)"
+        },
+        "data_description": {
+          "host": "LAN IP address of Broadlink device, e.g.: 192.168.1.100",
+          "mac": "MAC address of Broadlink device, e.g.: e8:70:72:9e:a2:35",
+          "timeout": "Device connection timeout, default 5 seconds",
+          "name": "Display name of the curtain, e.g.: Living Room Curtain",
+          "open_code": "Open RF code learned from Broadlink app (hexadecimal)",
+          "close_code": "Close RF code learned from Broadlink app (hexadecimal)",
+          "stop_code": "Stop RF code learned from Broadlink app (hexadecimal)",
+          "open_time": "Time required to fully open the curtain (seconds), needs actual measurement",
+          "close_time": "Time required to fully close the curtain (seconds), needs actual measurement"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Cannot connect to Broadlink device, please check IP address and network connection",
+      "unknown": "Unknown error occurred during configuration",
+      "invalid_host": "Invalid IP address format, please use IPv4 format, e.g.: 192.168.1.100",
+      "invalid_mac": "Invalid MAC address format, please use format like: aa:bb:cc:dd:ee:ff",
+      "invalid_code": "Invalid RF code format, please use hexadecimal format",
+      "invalid_time": "Time value must be between 1-300 seconds"
+    },
+    "abort": {
+      "already_configured": "This device is already configured",
+      "already_in_progress": "Configuration flow is already in progress"
+    }
+  }
+}
+

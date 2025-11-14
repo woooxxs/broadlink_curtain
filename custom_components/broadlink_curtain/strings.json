@@ -1,0 +1,72 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "博联窗帘配置",
+        "description": "配置博联设备和窗帘参数",
+        "data": {
+          "host": "设备IP地址",
+          "mac": "MAC地址",
+          "timeout": "超时时间（秒）",
+          "name": "窗帘名称",
+          "open_code": "开启射频码",
+          "close_code": "关闭射频码",
+          "stop_code": "停止射频码",
+          "open_time": "开启时间（秒）",
+          "close_time": "关闭时间（秒）"
+        }
+      },
+      "curtains": {
+        "title": "窗帘配置",
+        "description": "配置窗帘参数",
+        "data": {
+          "name": "窗帘名称",
+          "open_code": "开启射频码",
+          "close_code": "关闭射频码", 
+          "stop_code": "停止射频码",
+          "open_time": "开启时间（秒）",
+          "close_time": "关闭时间（秒）"
+        }
+      },
+      "add_more": {
+        "title": "添加更多窗帘",
+        "description": "是否添加更多窗帘？",
+        "data": {
+          "add_more": "添加更多窗帘"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "无法连接到博联设备，请检查IP地址和网络连接",
+      "unknown": "配置过程中发生未知错误",
+      "invalid_host": "IP地址格式不正确",
+      "invalid_mac": "MAC地址格式不正确",
+      "invalid_code": "射频码格式不正确（应为十六进制）",
+      "invalid_time": "时间值必须在1-300秒之间"
+    },
+    "abort": {
+      "already_configured": "此设备已配置",
+      "already_in_progress": "配置流程正在进行中"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "博联窗帘选项",
+        "description": "配置窗帘选项",
+        "data": {
+          "update_interval": "更新间隔（秒）"
+        }
+      }
+    }
+  },
+  "entity": {
+    "cover": {
+      "name": "窗帘"
+    },
+    "sensor": {
+      "name": "设备状态"
+    }
+  }
+}
+
