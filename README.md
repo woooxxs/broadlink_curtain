@@ -8,6 +8,9 @@
   [![Home Assistant](https://img.shields.io/badge/Home%20Assistant-2023.1+-blue.svg)](https://www.home-assistant.io/)
   [![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/)
   [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+  [![hacs](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/hacs/integration)
+
+  [![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=woooxxs&repository=broadlink_curtain&category=integration)
 </div>
 
 ---
@@ -45,9 +48,23 @@
 - 四个快捷位置按钮
 - 大号位置显示（48px）
 
-## 📦 快速开始
+## 📦 安装方法
 
-### 1. 安装组件
+### 方法1: 通过HACS安装（推荐）
+
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=woooxxs&repository=broadlink_curtain&category=integration)
+
+**或者手动添加**:
+
+1. 打开HACS → 集成
+2. 点击右上角菜单 → 自定义存储库
+3. 输入仓库地址：`https://github.com/woooxxs/broadlink_curtain`
+4. 类别选择：`Integration`
+5. 点击"添加"
+6. 搜索"博联窗帘"并安装
+7. 重启Home Assistant
+
+### 方法2: 手动安装
 
 ```bash
 # 复制组件到Home Assistant配置目录
@@ -59,7 +76,9 @@ cp -r www/broadlink-curtain-card.js /config/www/
 # 重启Home Assistant
 ```
 
-### 2. 配置资源
+## 🚀 快速开始
+
+### 1. 配置前端资源
 
 在 `configuration.yaml` 中添加：
 
@@ -71,7 +90,9 @@ lovelace:
       type: module
 ```
 
-### 3. 添加集成
+重启Home Assistant后，资源会自动加载。
+
+### 2. 添加集成
 
 1. 进入 **设置** → **设备与服务** → **添加集成**
 2. 搜索 **"博联窗帘"**
@@ -82,7 +103,7 @@ lovelace:
    - **移动时间**: 完全开/关所需秒数
    - **射频码**: 开/关/停三个射频码
 
-### 4. 添加自定义卡片
+### 3. 添加自定义卡片
 
 1. 编辑仪表板
 2. 添加卡片 → 手动配置
