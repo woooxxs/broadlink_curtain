@@ -212,18 +212,28 @@ class BroadlinkCurtainEntity(CoordinatorEntity, CoverEntity, RestoreEntity):
         position = kwargs.get(ATTR_POSITION)
         if position is None:
             return
-        
+
         # 取消之前的移动任务
         if self._move_task and not self._move_task.done():
             self._move_task.cancel()
-        
+
         # 计算移动方向和距离
         current_pos = self._position
         target_pos = position
-        
+
         if target_pos == current_pos:
             return
-        
+
+        # 特殊处理：0%直接关闭，100%直接打开
+        if target_pos == 0:
+            _LOGGER.info("🎯 目标位置为0%，直接发送关闭指令")
+            await self._async_direct_close()
+            return
+        elif target_pos == 100:
+            _LOGGER.info("🎯 目标位置为100%，直接发送打开指令")
+            await self._async_direct_open()
+            return
+
         # 启动移动任务
         self._target_position = target_pos
         self._move_task = asyncio.create_task(
@@ -317,8 +327,11 @@ class BroadlinkCurtainEntity(CoordinatorEntity, CoverEntity, RestoreEntity):
         _LOGGER.info("   - 新位置: %d%%", self._position)
         _LOGGER.info("   - 实际移动: %d%%", self._position - old_position)
 
-        # 更新支持的功能
+        # 更新支持的功能并强制刷新状态（用于HomeKit同步）
         self._update_supported_features()
+        self.async_write_ha_state()
+        # 延迟再次更新，确保HomeKit能识别到状态变化
+        await asyncio.sleep(0.5)
         self.async_write_ha_state()
 
     async def _async_move_close(self, percentage: int) -> None:
@@ -388,6 +401,81 @@ class BroadlinkCurtainEntity(CoordinatorEntity, CoverEntity, RestoreEntity):
         _LOGGER.info("   - 新位置: %d%%", self._position)
         _LOGGER.info("   - 实际移动: %d%%", old_position - self._position)
 
-        # 更新支持的功能
+        # 更新支持的功能并强制刷新状态（用于HomeKit同步）
         self._update_supported_features()
+        self.async_write_ha_state()
+        # 延迟再次更新，确保HomeKit能识别到状态变化
+        await asyncio.sleep(0.5)
+        self.async_write_ha_state()
+
+    async def _async_direct_open(self) -> None:
+        """直接打开窗帘到100%，不发送停止指令."""
+        _LOGGER.info("🔄 直接打开窗帘 %s 到100%", self._name)
+
+        # 发送打开指令
+        self._current_state = CURTAIN_STATE_OPENING
+        self._target_position = 100
+        self.async_write_ha_state()
+
+        _LOGGER.info("📡 发送开启指令...")
+        success = await self.coordinator.async_send_rf_code(self._open_code)
+        if not success:
+            _LOGGER.error("❌ 开启指令发送失败")
+            self._current_state = CURTAIN_STATE_STOPPED
+            self._target_position = None
+            self.async_write_ha_state()
+            return
+
+        # 等待窗帘完全打开（使用配置的移动时间）
+        _LOGGER.info("⏱️ 等待窗帘完全打开（%d秒）...", self._move_time)
+        await asyncio.sleep(self._move_time)
+
+        # 更新最终位置
+        self._position = 100
+        self._current_state = CURTAIN_STATE_STOPPED
+        self._target_position = None
+
+        _LOGGER.info("✅ 窗帘 %s 已完全打开", self._name)
+
+        # 更新支持的功能并强制刷新状态（用于HomeKit同步）
+        self._update_supported_features()
+        self.async_write_ha_state()
+        # 延迟再次更新，确保HomeKit能识别到状态变化
+        await asyncio.sleep(0.5)
+        self.async_write_ha_state()
+
+    async def _async_direct_close(self) -> None:
+        """直接关闭窗帘到0%，不发送停止指令."""
+        _LOGGER.info("🔄 直接关闭窗帘 %s 到0%", self._name)
+
+        # 发送关闭指令
+        self._current_state = CURTAIN_STATE_CLOSING
+        self._target_position = 0
+        self.async_write_ha_state()
+
+        _LOGGER.info("📡 发送关闭指令...")
+        success = await self.coordinator.async_send_rf_code(self._close_code)
+        if not success:
+            _LOGGER.error("❌ 关闭指令发送失败")
+            self._current_state = CURTAIN_STATE_STOPPED
+            self._target_position = None
+            self.async_write_ha_state()
+            return
+
+        # 等待窗帘完全关闭（使用配置的移动时间）
+        _LOGGER.info("⏱️ 等待窗帘完全关闭（%d秒）...", self._move_time)
+        await asyncio.sleep(self._move_time)
+
+        # 更新最终位置
+        self._position = 0
+        self._current_state = CURTAIN_STATE_STOPPED
+        self._target_position = None
+
+        _LOGGER.info("✅ 窗帘 %s 已完全关闭", self._name)
+
+        # 更新支持的功能并强制刷新状态（用于HomeKit同步）
+        self._update_supported_features()
+        self.async_write_ha_state()
+        # 延迟再次更新，确保HomeKit能识别到状态变化
+        await asyncio.sleep(0.5)
         self.async_write_ha_state()
