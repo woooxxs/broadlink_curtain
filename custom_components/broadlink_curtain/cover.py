@@ -266,9 +266,9 @@ class BroadlinkCurtainEntity(CoordinatorEntity, CoverEntity, RestoreEntity):
             _LOGGER.warning("窗帘 %s 打开百分比无效: %d%%", self._name, percentage)
             return
 
-        # 计算移动时间
+        # 计算移动时间，并加1秒补偿启动和停止延迟
         total_time = self._move_time
-        move_time = (percentage / 100.0) * total_time
+        move_time = (percentage / 100.0) * total_time + 1.0
 
         start_position = self._position
         target_position = min(100, self._position + percentage)
@@ -277,7 +277,7 @@ class BroadlinkCurtainEntity(CoordinatorEntity, CoverEntity, RestoreEntity):
         _LOGGER.info("   - 当前位置: %d%%", start_position)
         _LOGGER.info("   - 目标位置: %d%%", target_position)
         _LOGGER.info("   - 移动距离: %d%%", percentage)
-        _LOGGER.info("   - 预计时间: %.1f 秒", move_time)
+        _LOGGER.info("   - 预计时间: %.1f 秒 (基础时间 + 1秒补偿)", move_time)
         _LOGGER.info("   - 开启射频码: %s", self._open_code)
         _LOGGER.info("   - 停止射频码: %s", self._stop_code)
 
@@ -340,9 +340,9 @@ class BroadlinkCurtainEntity(CoordinatorEntity, CoverEntity, RestoreEntity):
             _LOGGER.warning("窗帘 %s 关闭百分比无效: %d%%", self._name, percentage)
             return
 
-        # 计算移动时间
+        # 计算移动时间，并加1秒补偿启动和停止延迟
         total_time = self._move_time
-        move_time = (percentage / 100.0) * total_time
+        move_time = (percentage / 100.0) * total_time + 1.0
 
         start_position = self._position
         target_position = max(0, self._position - percentage)
@@ -351,7 +351,7 @@ class BroadlinkCurtainEntity(CoordinatorEntity, CoverEntity, RestoreEntity):
         _LOGGER.info("   - 当前位置: %d%%", start_position)
         _LOGGER.info("   - 目标位置: %d%%", target_position)
         _LOGGER.info("   - 移动距离: %d%%", percentage)
-        _LOGGER.info("   - 预计时间: %.1f 秒", move_time)
+        _LOGGER.info("   - 预计时间: %.1f 秒 (基础时间 + 1秒补偿)", move_time)
         _LOGGER.info("   - 关闭射频码: %s", self._close_code)
         _LOGGER.info("   - 停止射频码: %s", self._stop_code)
 
@@ -426,9 +426,10 @@ class BroadlinkCurtainEntity(CoordinatorEntity, CoverEntity, RestoreEntity):
             self.async_write_ha_state()
             return
 
-        # 等待窗帘完全打开（使用配置的移动时间）
-        _LOGGER.info("⏱️ 等待窗帘完全打开（%d秒）...", self._move_time)
-        await asyncio.sleep(self._move_time)
+        # 等待窗帘完全打开（使用配置的移动时间 + 1秒补偿）
+        wait_time = self._move_time + 1
+        _LOGGER.info("⏱️ 等待窗帘完全打开（%d秒 = 配置时间 + 1秒补偿）...", wait_time)
+        await asyncio.sleep(wait_time)
 
         # 更新最终位置
         self._position = 100
@@ -462,9 +463,10 @@ class BroadlinkCurtainEntity(CoordinatorEntity, CoverEntity, RestoreEntity):
             self.async_write_ha_state()
             return
 
-        # 等待窗帘完全关闭（使用配置的移动时间）
-        _LOGGER.info("⏱️ 等待窗帘完全关闭（%d秒）...", self._move_time)
-        await asyncio.sleep(self._move_time)
+        # 等待窗帘完全关闭（使用配置的移动时间 + 1秒补偿）
+        wait_time = self._move_time + 1
+        _LOGGER.info("⏱️ 等待窗帘完全关闭（%d秒 = 配置时间 + 1秒补偿）...", wait_time)
+        await asyncio.sleep(wait_time)
 
         # 更新最终位置
         self._position = 0

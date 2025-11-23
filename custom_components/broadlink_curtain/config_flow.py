@@ -101,10 +101,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     
                     if await coordinator.async_test_connection():
                         # 创建窗帘配置
-                        # 自动在用户输入的时间上加1秒，补偿启动和停止的延迟
-                        move_time = user_input[CONF_CURTAIN_MOVE_TIME] + 1
-                        _LOGGER.info("⏱️ 移动时间: 用户输入 %d秒 + 补偿1秒 = %d秒",
-                                    user_input[CONF_CURTAIN_MOVE_TIME], move_time)
+                        move_time = user_input[CONF_CURTAIN_MOVE_TIME]
                         curtain_config = {
                             CONF_CURTAIN_NAME: user_input[CONF_CURTAIN_NAME],
                             CONF_CURTAIN_OPEN_CODE: open_code,
@@ -147,7 +144,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 <p><b>开启射频码:</b> 使用博联App学习的开启射频码，如 deadbeef</p>
                 <p><b>关闭射频码:</b> 使用博联App学习的关闭射频码，如 beefdead</p>
                 <p><b>停止射频码:</b> 使用博联App学习的停止射频码，如 feedface</p>
-                <p><b>移动时间:</b> 窗帘完全开启或关闭所需时间（系统会自动+1秒补偿启动延迟），默认30秒</p>
+                <p><b>移动时间:</b> 窗帘完全开启或关闭所需时间，默认30秒</p>
                 <br>
                 <p><b>快速配置方法:</b></p>
                 <p>1. 打开博联官方App，查看设备IP地址</p>
