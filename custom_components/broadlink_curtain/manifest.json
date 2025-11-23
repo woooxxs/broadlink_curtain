@@ -1,9 +1,9 @@
 {
   "domain": "broadlink_curtain",
   "name": "博联窗帘",
-  "documentation": "https://github.com/your-repo/broadlink_curtain",
-  "issue_tracker": "https://github.com/your-repo/broadlink_curtain/issues",
-  "codeowners": ["@your-username"],
+  "documentation": "https://github.com/woooxxs/broadlink_curtain",
+  "issue_tracker": "https://github.com/woooxxs/broadlink_curtain/issues",
+  "codeowners": ["@woooxxs"],
   "requirements": ["broadlink==0.18.0"],
   "version": "1.0.0",
   "config_flow": true,

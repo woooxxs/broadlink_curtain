@@ -5,6 +5,8 @@
   "country": ["CN"],
   "homeassistant": "2023.1.0",
   "render_readme": true,
-  "iot_class": "Local Polling"
+  "iot_class": "Local Polling",
+  "zip_release": false,
+  "persistent_directory": "www"
 }
 

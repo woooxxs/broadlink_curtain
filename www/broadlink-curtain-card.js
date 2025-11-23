@@ -1,3 +1,12 @@
+/**
+ * Broadlink Curtain Card
+ * 博联窗帘控制卡片
+ *
+ * @version 1.0.0
+ * @author woooxxs
+ * @repository https://github.com/woooxxs/broadlink_curtain
+ */
+
 class BroadlinkCurtainCard extends HTMLElement {
   constructor() {
     super();
