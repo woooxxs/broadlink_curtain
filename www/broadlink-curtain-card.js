@@ -39,10 +39,10 @@ class BroadlinkCurtainCard extends HTMLElement {
   renderCompact(currentPosition, currentState, entityId) {
     // 根据位置判断窗帘状态，选择图标
     const isOpen = currentPosition > 50;
-    // mdi:curtains (打开) 和 mdi:curtains-closed (关闭)
+    // mdi:blinds-horizontal-closed (关闭) 和 mdi:blinds-horizontal (打开) - 横向窗帘
     const iconPath = isOpen
-      ? 'M3 3v2h18V3M3 19v2h18v19M13 6v11h8V6M4 6v11h8V6m-1 1v9H5V7m8 0v9h6V7Z' // mdi:curtains
-      : 'M15.5 6.5A1.5 1.5 0 0 1 17 8v8a1.5 1.5 0 0 1-1.5 1.5h-7A1.5 1.5 0 0 1 7 16V8a1.5 1.5 0 0 1 1.5-1.5M3 3v2h18V3M3 19v2h18v-2Z'; // mdi:curtains-closed
+      ? 'M12 5v14M4 7h16M4 11h16M4 15h16M4 19h16' // mdi:blinds-horizontal (打开)
+      : 'M12 5v14M4 7h16M4 9h16M4 11h16M4 13h16M4 15h16M4 17h16M4 19h16'; // mdi:blinds-horizontal-closed (关闭)
 
     this.content.innerHTML = `
       <style>

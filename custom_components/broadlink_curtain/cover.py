@@ -80,7 +80,8 @@ class BroadlinkCurtainEntity(CoordinatorEntity, CoverEntity, RestoreEntity):
         # 实体属性
         self._attr_name = self._name
         self._attr_unique_id = f"{coordinator.entry.entry_id}_{self._name}"
-        self._attr_device_class = CoverDeviceClass.CURTAIN
+        self._attr_device_class = CoverDeviceClass.CURTAIN  # 使用CURTAIN保持窗帘图标
+        self._attr_icon = "mdi:curtains"  # 明确指定窗帘图标
         # 支持的功能会根据位置动态更新
         self._update_supported_features()
 
@@ -146,6 +147,23 @@ class BroadlinkCurtainEntity(CoordinatorEntity, CoverEntity, RestoreEntity):
         # 位置为0时返回True（已关闭）
         # 其他位置返回False（未关闭/部分打开/已打开）
         return self._position == 0
+
+    @property
+    def state(self) -> str:
+        """返回窗帘状态，用于HomeKit等集成."""
+        # HomeKit需要明确的state属性来判断窗帘状态
+        # 这样可以避免一直显示loading状态
+        if self._current_state == CURTAIN_STATE_OPENING:
+            return "opening"
+        elif self._current_state == CURTAIN_STATE_CLOSING:
+            return "closing"
+        elif self._position == 0:
+            return "closed"
+        elif self._position == 100:
+            return "open"
+        else:
+            # 部分打开状态
+            return "open"
 
     @property
     def available(self) -> bool:
